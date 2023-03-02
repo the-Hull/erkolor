@@ -7,3 +7,7 @@
 ^erkolor\.Rcheck$
 ^erkolor.*\.tar\.gz$
 ^erkolor.*\.tgz$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
