@@ -10,8 +10,8 @@
 #' @export
 erkPalettes <- list(
   erk = list(c("#de3614", "#823d1c", "#964d80", "#667a94", "#575757", "#337d12", "#66c440"), c(4, 3, 7, 1, 5, 2, 6), colorblind=FALSE),
-  erksemi = list(c("#DE361480", "#823D1C80", "#964D8080", "#667A9480", "#57575780", "#337D1280", "#66C44080"), c(4, 3, 7, 1, 5, 2, 6), colorblind=FALSE),
-  erklight = list(c("#DE361433", "#823D1C33", "#964D8033", "#667A9433", "#57575733", "#337D1233", "#66C44033"), c(4, 3, 7, 1, 5, 2, 6), colorblind=FALSE)
+  erksemi = list(c("#EE9A8A", "#C19E8E", "#CBA6BF", "#B2BDC9", "#ABABAB", "#99BE88", "#B2E29F"), c(4, 3, 7, 1, 5, 2, 6), colorblind=FALSE),
+  erklight = list(c("#F8D7D0", "#E6D8D2", "#EADBE6", "#E0E4EA", "#DDDDDD", "#D6E5D0", "#E0F3D9"), c(4, 3, 7, 1, 5, 2, 6), colorblind=FALSE),
 )
 
 # Function for generating palettes
