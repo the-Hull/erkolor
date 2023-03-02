@@ -12,3 +12,5 @@ RoxygenNote: 7.2.3
 URL: https://github.com/the-Hull/erkolor,
     https://the-hull.github.io/erkolor/
 BugReports: https://github.com/the-Hull/erkolor/issues
+Imports: 
+    ggplot2
