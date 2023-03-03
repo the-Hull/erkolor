@@ -12,8 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "75%",
-  fig.width=7, 
-  fig.height = 10,
+  fig.width=10, 
+  fig.height = 7,
   dpi = 300
 )
 ```
@@ -136,8 +136,10 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Petal.Length)) +
 
 ```{r fig.width=17/2.54, fig.height=10/2.54}
 sectors <- c("Energy", "Transportation", "LULUCF")
-mock_data <- data.frame(sector = factor(sectors, levels = sectors),
-                        values = c(100, 70, -30))
+mock_data <- data.frame(
+  sector = factor(sectors, levels = sectors),
+  values = c(100, 70, -30)
+)
 
 
 cols <- erk.brewer("erk", 7)[c(1,4,7)]
