@@ -87,18 +87,22 @@ erk.brewer <- function(palette_name, n, type = c("discrete", "continuous"), dire
     stop("Number of requested colors greater than what discrete palette can offer, \n use continuous instead.")
   }
 
-  continuous <-  if(direction==1){grDevices::colorRampPalette(palette[[1]])(n)
-  }else{
-    grDevices::colorRampPalette(rev(palette[[1]]))(n)}
+  continuous <-  if(direction==1) {
+    grDevices::colorRampPalette(palette[[1]])(n)
+  } else {
+    grDevices::colorRampPalette(rev(palette[[1]]))(n)
+  }
 
-  discrete <- if(direction==1 & override.order==FALSE){
+  discrete <- if(direction==1 & override.order==TRUE) {
     palette[[1]][order(palette[[2]][1:n])]
-  }else if(direction==-1 & override.order==FALSE){
+  }else if(direction==-1 & override.order==TRUE) {
     rev(palette[[1]][order(palette[[2]][1:n])])
-  } else if(direction==1 & override.order==TRUE){
-    palette[[1]][palette[[2]][1:n]]
-  } else{
-    rev(palette[[1]][palette[[2]][1:n]])
+  } else if(direction==1 & override.order==FALSE) {
+    # palette[[1]][palette[[2]][1:n]]
+    palette[[1]][1:n]
+  } else {
+    rev(palette[[1]][1:n])
+    # rev(palette[[1]][palette[[2]][1:n]])
   }
 
   out <- switch(type,
@@ -354,14 +358,9 @@ scale_colour_erk_c <- scale_color_erk_c
 #' @importFrom graphics rect par layout polygon
 
 
-display_all <- function(n, sequential = FALSE, colorblind_only = FALSE, direction = 1, override.order=FALSE){
-  if(colorblind_only){
-    N = length(colorblind_palettes)
-    pal_names = colorblind_palettes
-  }else{
+display_all <- function(n, sequential = FALSE, direction = 1, override.order=FALSE){
     N = length(erkPalettes)
     pal_names = names(erkPalettes)
-  }
 
   orig_pars <- par()
 
@@ -396,30 +395,16 @@ display_all <- function(n, sequential = FALSE, colorblind_only = FALSE, directio
 
     if(missing(n)){
 
-      if(colorblind_only){
 
-        layout(matrix(1:N,6,4))
+        layout(matrix(1:N,3,3))
         for(i in 1:N) plot_palette(pal_names[i])
-
-      }else{
-
-        layout(matrix(1:N,8,7))
-        for(i in 1:N) plot_palette(pal_names[i])
-      }
 
     } else{
 
-      if(colorblind_only){
 
-        layout(matrix(1:N,6,4))
+        layout(matrix(1:N,3,3))
         for(i in 1:N) plot_palette(pal_names[i],n)
 
-      }else{
-
-        layout(matrix(1:N,8,7))
-        for(i in 1:N) plot_palette(pal_names[i],n)
-
-      }
 
     }
 

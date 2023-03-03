@@ -1,0 +1,153 @@
+---
+title: "Using ERK palettes and themes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using ERK palettes and themes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "75%",
+  fig.width=7, 
+  fig.height = 10,
+  dpi = 300
+)
+```
+
+```{r setup}
+library(erkolor)
+```
+
+# Available palettes
+
+```{r results="asis", echo=FALSE}
+
+cat(paste0("- `", names(erkPalettes), "`"), sep = "\n")
+
+
+```
+
+
+```{r }
+display_all(override.order = FALSE)
+display_all(override.order = TRUE)
+
+```
+
+You can choose between discrete and continuous palettes.
+Continuous values are interpolated based on the desired number of output colors
+
+
+```{r}
+
+erk.brewer(palette_name = "erk",n = 3, type = "discrete")
+erk.brewer(palette_name = "erk",n = 15, type = "continuous")
+
+# fails
+tryCatch(
+  
+  erk.brewer(palette_name = "erk",n = 15, type = "discrete"), 
+  
+  error = function(e) print(e)
+)
+
+
+pal <- erk.brewer(palette_name = "erk",n = 3, type = "discrete")
+str(pal)
+
+```
+## Using palettes in base `R`
+
+```{r}
+
+pal_3_cols <- erk.brewer(palette_name = "erk",n = 3, type = "discrete", override.order = FALSE)
+str(pal_3_cols)
+
+plot(iris$Sepal.Length, iris$Sepal.Width, col = pal_3_cols[ unclass(iris$Species) ], pch = 16, cex = 1.5)
+
+
+
+pal_3_cols <- erk.brewer(palette_name = "erk",n = 7, type = "discrete", override.order = TRUE)[1:3]
+
+plot(iris$Sepal.Length, iris$Sepal.Width, col = pal_3_cols[ unclass(iris$Species) ], pch = 16, cex = 1.5)
+
+
+
+```
+
+
+## Using palettes with `ggplot2`
+
+### Discrete
+
+Setting `override.order` to `TRUE` yields better results with fewer categories.
+
+```{r}
+library(ggplot2)
+
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  # better with fewer colors
+  scale_color_erk_d(palette_name = "erk", override.order = TRUE)
+
+
+```
+
+```{r}
+
+sectors <- c("Energy", "Transportation", "LULUCF")
+mock_data <- data.frame(sector = factor(sectors, levels = rev(sectors)),
+                        values = c(100, 70, -30))
+
+
+cols <- erk.brewer("erk", 7)[c(1,4,7)]
+names(cols) <- mock_data[[ "sector" ]]
+
+
+ggplot(mock_data, aes(x = values, y = sector, fill = sector)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = cols)
+
+
+```
+
+
+
+### Continuous
+
+```{r}
+library(ggplot2)
+
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Petal.Length)) +
+  geom_point() +
+  # better with fewer colors
+  scale_color_erk_c(palette_name = "erk")
+
+
+```
+
+
+## ERK Theme
+
+
+```{r fig.width=17/2.54, fig.height=10/2.54}
+sectors <- c("Energy", "Transportation", "LULUCF")
+mock_data <- data.frame(sector = factor(sectors, levels = sectors),
+                        values = c(100, 70, -30))
+
+
+cols <- erk.brewer("erk", 7)[c(1,4,7)]
+names(cols) <- mock_data[[ "sector" ]]
+
+
+ggplot(mock_data, aes(x = sector, y = values, fill = sector)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = cols) +
+  theme_erk()
+
+```
+
